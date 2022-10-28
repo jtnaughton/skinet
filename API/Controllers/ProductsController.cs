@@ -1,4 +1,5 @@
 using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -7,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
     {
         private readonly IGenericRepository<Product> _productsRepo;
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
@@ -29,19 +30,18 @@ namespace API.Controllers;
         }
 
         [HttpGet]
-
         public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
             
             var products = await _productsRepo.ListAsync(spec);
-
+            
             return Ok(_mapper
                 .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
         
         [HttpGet("{id}")]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
@@ -56,6 +56,7 @@ namespace API.Controllers;
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrandsAsync()
         {
             return Ok(await _productBrandRepo.ListAllAsync());
+
         }
         
         [HttpGet("types")]
@@ -63,5 +64,6 @@ namespace API.Controllers;
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypesAsync()
         {
             return Ok(await _productTypeRepo.ListAllAsync());
+            
         }
     }
