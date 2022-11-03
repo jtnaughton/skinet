@@ -1,5 +1,6 @@
 using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -30,14 +31,23 @@ public class ProductsController : ControllerBase
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
-            
+            var spec = new ProductsWithTypesAndBrandsSpecification(productSpecParams);
+
+            var countSpec = new ProductWithFiltersForCountSpecification(productSpecParams);
+
             var products = await _productsRepo.ListAsync(spec);
+
+            var totalItems = await _productsRepo.CountAsync(countSpec);
+
+            var data = _mapper
+                .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+            return Ok(new Pagination<ProductToReturnDto>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, data));
             
-            return Ok(_mapper
-                .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            
+            // TODO: error handling if(id != typeof(int))
         }
         
         [HttpGet("{id}")]
@@ -47,6 +57,8 @@ public class ProductsController : ControllerBase
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
 
             var product = await _productsRepo.GetEntityWithSpec(spec);
+            
+            // TODO: error handling if id != typeof int
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
