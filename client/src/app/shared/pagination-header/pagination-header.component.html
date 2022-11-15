@@ -1,0 +1,16 @@
+<header>
+  <strong *ngIf="this.totalCount === 0">
+    No Results
+  </strong>
+  <div *ngIf="this.totalCount != 0">
+    <strong *ngIf="this.totalCount > this.pageSize">
+      Showing {{(pageNumber-1) * pageSize+1}} -
+      {{(pageNumber) * pageSize}} of
+    </strong>
+    <strong *ngIf="this.totalCount < this.pageSize">
+      Showing {{(pageNumber-1) * pageSize+1}} -
+      {{totalCount}} of
+    </strong>
+    <strong>{{this.totalCount}} Results</strong>
+  </div>
+</header>
