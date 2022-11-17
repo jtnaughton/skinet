@@ -23,6 +23,7 @@ export class ShopComponent implements OnInit {
     {name: 'Price: Low to High', value: 'priceAsc'},
     {name: 'Price: High to Low', value: 'priceDesc'},
   ];
+  strs = ["flower", "flow", "flight"]
 
   constructor(private shopService: ShopService) { }
 
@@ -75,6 +76,7 @@ export class ShopComponent implements OnInit {
     this.shopParams.sortSelected = sort;
     this.getProducts();
   }
+
 
   onPageChanged(event: any) {
     if(this.shopParams.pageNumber !== event) {

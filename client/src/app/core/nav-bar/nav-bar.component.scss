@@ -10,3 +10,18 @@
   top: -2px;
   right: -5px;
 }
+
+a {
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  color: grey
+}
+a:hover {
+  color: black;
+}
+
+.logo {
+  cursor: pointer
+}
