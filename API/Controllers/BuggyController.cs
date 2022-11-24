@@ -59,7 +59,7 @@ public class BuggyController : BaseApiController
 
         var result = 5;
             
-        return Ok();
+        return Ok(result);
     }
 
 }
