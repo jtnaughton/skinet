@@ -5,3 +5,20 @@
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+.xng-breadcrumb-root {
+  // 8 left right, 16 top bottom
+  padding: 8px 16px;
+  display: inline;
+  border: 0;
+}
+
+label.xng-breadcrumb-trail {
+  margin-bottom: 0;
+  color: black;
+  font-weight: bold;
+}
+
+.xng-breadcrumb-seperator {
+  padding: 0 0;
+}

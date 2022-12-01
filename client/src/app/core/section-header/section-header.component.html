@@ -1,0 +1,9 @@
+<ng-container *ngIf="(breadcrumb$ | async) as breadcrumbs">
+  <section *ngIf="breadcrumbs.length > 0 && breadcrumbs[breadcrumbs.length-1].label !== 'Home'">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <xng-breadcrumb></xng-breadcrumb>
+      </div>
+    </div>
+  </section>
+</ng-container>

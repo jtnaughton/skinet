@@ -11,9 +11,9 @@ import { ShopService } from './shop.service';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
-  @ViewChild('search', {static: true}) searchTerm: ElementRef;
+  @ViewChild('search', {static: false}) searchTerm: ElementRef;
 
-  products: IProduct[];
+  products: IProduct[] = [];
   brands: IBrand[];
   productTypes: IProductType[];
   shopParams = new ShopParams();
@@ -23,7 +23,7 @@ export class ShopComponent implements OnInit {
     {name: 'Price: Low to High', value: 'priceAsc'},
     {name: 'Price: High to Low', value: 'priceDesc'},
   ];
-  strs = ["flower", "flow", "flight"]
+
 
   constructor(private shopService: ShopService) { }
 
